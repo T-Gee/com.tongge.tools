@@ -1,0 +1,94 @@
+MyPatch v 2.0 说明文件
+日期: 2011-02-17
+一、作者信息
+	软件快发事业部 - 借出 - B/S版非税项目组
+	佟广恩tongge@neusoft.com
+二、升级说明
+	由于ClearCase制作升级包比较费事,原来的升级包打包程序并不适用，特此升级。
+三、升级内容
+	添加PatchCreater类及附属相关包专门用于生成Patch文件，并修改了MyPatch相关程序适用于新的Patch文件
+四、原理
+	在CC里有一个DB的隐藏文件，其中的文件策略：
+			第一行：估计是 CC文件类型
+			第二行：文件路径
+			第三行：未知
+			第四行：文件及文件夹个数（16进制）
+			第5-n行：文件（夹）详细描述
+			
+			第5-n行详细描述：
+				冒号前：文件（夹）名称长度
+				冒号后：第1段（用“|”分）文件（夹）名称
+				第2段：文件（夹）类型：1 文件，2 文件夹
+				第3段：时间戳
+				第4段：文件大小
+				第5段：
+				第6段：
+				第7段：是否检出文件
+	根据最后一个属性检测出所有的已检出文件，并制作成pathc.txt文件
+	
+四、以下是以前的文件说明
+
+{	
+
+
+
+
+MyPatch v0.2说明文件
+日期: 2009-04-02
+
+一、作者信息
+政府事业部 - 财政开发部 - B/S版非税项目组
+王帅 shuai-wang@neusoft.com
+
+二、目的
+方便大家制作升级包，减少升级包制作过程中手工复制文件的痛苦，避免复制错文件、遗漏文件等问题。
+
+三、此版本使用JDK1.4编译
+
+四、原理
+本软件利用MyEclipse的与CVS同步功能生成Patch文件，再从Patch文件中搜索出要加入升级包的文件信息，
+然后将这些文件复制到预先准备好的空升级包中，同时分别把文件路径写入“JAVA源文件”、“类文件”、“JSP文件”和“配置文件”目录中的“说明.txt”，
+最后根据需要向“数据库文件”和“报表文件”两文件夹中手动加入相应文件或删除这两个目录，修改文件“升级说明.xls”，即可生成升级包。
+
+五、使用前的准备
+1. MyEclipse导入工程MyPatch
+2. 配置MyPatch工程中的config.properties文件：（请不要使用默认的MyEclipse Properties Editor打开，会有中文和别的问题，改用Text Editor可解决）
+	a. workspace属性：您的工作区目录，例如：“workspace=E:\\工作区\\eclipse_ln_workspace\\”
+	b. project属性：您的MyEclipse工程名称，例如：“ntrc_project”
+	c. patch_filename属性：您想为Patch文件取什么名字、您想把它放在哪里，例如：“C:\\patch.txt”
+	d. package_dir属性：您想为升级包取什么名字、您想把它放在哪里，例如：“E:\\地区-问题描述-sysdate-作者”，
+			package_dir中的sysdate可以被自动替换成yyyyMMdd_HHmmss格式的时间。
+
+六、使用步骤
+1. 在MyEclipse中鼠标右单击要同步的项目 - Team - Synchronize with Repository - 转到“Team Synchronizing视图”
+2. 在“Team Synchronizing视图”中鼠标右单击项目根目录 - Expand All（展开目录树）
+3. 移除不想加入升级包的工程文件：鼠标右单击不想加入升级包的文件 - Remove from View
+4. 鼠标右单击项目根目录 - Create Patch - Save in file system
+	- C:\patch.txt（Patch文件可根据个人习惯进行配置，但要保证与config.properties文件中的“patch_filename”属性一致）
+	- Finish（此时会生成Patch文件“C:\patch.txt”）
+5. 运行MyPatch工程中的Java类：mypatch.MyPatch
+
+七、优秀的软件源自团队的协作，而非个人英雄主义！您的意见和建议将是软件完善的最大源动力！
+希望大家多提，使用过程中如有疑问，欢迎与我联系，谢谢！
+
+八、已知问题：
+1. 内部类对应的类文件无法自动复制。
+    当前版本认为一个Java编译单元（一个.java文件）仅编译出一个类文件。
+    例如：一个文件名为“Abc.java”的文件，可能会因为有内部类而编译出ABC.class和ABC$1.class两个文件。
+         但当前版本仅会自动复制ABC.class到升级包中，而不会自动复制ABC$1.class。
+    解决方案：如遇到此问题，请手动复制ABC$1.class到升级包中。后续版中会修改此问题。
+2. 如果编译单元中出现多个类定义，那么仅公有类对应的类文件会被自动复制。
+    例如：名为Abc.java的文件中编写了如下代码：
+         public class Abc {
+         }
+         class Def{
+         }
+         那么该文件编译时会生成两个名称分别为Abc.class和Def.class的类文件。
+         这时使用本软件制作升级包，仅会自动复制Abc.class，而不会复制Def.class文件。
+    解决方案：如遇到此问题，请手动复制Def.class到升级包中。建议不要在编译单元中这样定义类。
+3. CVS路径名与工程名不同导致本软件运行时出错。
+    您的工程一定会关联到CVS，而本软件又依赖Eclipse生成的补丁文件（通常为“patch.txt”）来生成升级包。因此，该文件中的内容对本软件至关重要。
+    但如果您从CVS上“Check out”一个工程时（或在此之后）修改了工程名，那么以后您使用Eclipse在该工程上生成的补丁文件中的CVS路径中的工程名就会不一致。进而会导致本软件运行出错。
+4. 工作区放在包含空格的文件夹中时，运行失败。
+
+}
