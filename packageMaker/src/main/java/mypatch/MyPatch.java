@@ -35,6 +35,7 @@ import com.tongge.createPackage.util.PropertiesUtil;
  * @update 佟广恩 tge0503020211@163.com
  * @version 0.2
  */
+@SuppressWarnings("unchecked")
 public class MyPatch {
 
 	/**
@@ -44,7 +45,8 @@ public class MyPatch {
 	 * @throws AppException
 	 * @throws Exception
 	 */
-	public static void main(String[] args) throws IOException, AppException {
+	
+    public static void main(String[] args) throws IOException, AppException {
 		// MypathFace mypathFace1=new MypathFace("整理升级包");
 		// mypathFace1.setVisible(true);
 
