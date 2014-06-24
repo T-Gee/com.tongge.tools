@@ -1,6 +1,7 @@
 package com.tongge.workspace;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -50,6 +51,13 @@ public class WorkspaceUtilsTest {
 		}
 		
 	}
+	
+	@Test
+    public void testName() throws Exception {
+        String regex = "^.*.*applicationContext-allbean-hibernate\\.xml.*$";
+        String line = "src/resources/spring/applicationContext-allbean-hibernate.xml";
+        assertTrue(line.matches(regex));
+    }
 	
 
 }
