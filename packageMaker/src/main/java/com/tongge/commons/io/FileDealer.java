@@ -1,4 +1,4 @@
-package com.tongge.createPackage.io;
+package com.tongge.commons.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
-import com.tongge.createPackage.exception.AppException;
+import com.tongge.application.AppException;
 
 
 

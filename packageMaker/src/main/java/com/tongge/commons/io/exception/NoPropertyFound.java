@@ -1,4 +1,4 @@
-package com.tongge.createPackage.exception;
+package com.tongge.commons.io.exception;
 
 
 public class NoPropertyFound extends PropertiesException {

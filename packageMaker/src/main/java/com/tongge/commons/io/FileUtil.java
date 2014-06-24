@@ -6,7 +6,7 @@
  * @email:tge0503020211@163.com
  * @version        1.0
 */
-package com.tongge.createPackage.util;
+package com.tongge.commons.io;
 
 import java.io.File;
 import java.io.FileInputStream;

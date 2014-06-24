@@ -1,6 +1,6 @@
-package com.tongge.createPackage.exception;
+package com.tongge.commons.io.exception;
 
-import com.tongge.createPackage.util.PropertiesUtil;
+import com.tongge.commons.io.PropertiesUtil;
 
 public class NoPropertyValueFound extends PropertiesException {
 

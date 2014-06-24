@@ -1,16 +1,15 @@
-package com.tongge.createPackage.util;
+package com.tongge.commons.io;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import mypatch.Constant;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.tongge.createPackage.exception.NoPropertyFound;
-import com.tongge.createPackage.exception.PropertiesException;
+import com.tongge.application.ApplicationContext;
+import com.tongge.commons.io.exception.NoPropertyFound;
+import com.tongge.commons.io.exception.PropertiesException;
 
 /**
  * 
@@ -77,7 +76,7 @@ public class PropertiesUtil {
 		} else {
 //			FileUtil fileUtil = new FileUtil();
 //			path = fileUtil.getFilePath(Constant.CONFIG_PROPERTIES);
-			path = Constant.CONFIG_PROPERTIES;
+			path = ApplicationContext.CONFIG_PROPERTIES;
 		}
 		InputStream is = null;
 		try {
